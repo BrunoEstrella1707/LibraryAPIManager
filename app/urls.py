@@ -13,4 +13,6 @@ urlpatterns = [
     path('api/v1/', include('books.urls')),
 
     path('api/v1/', include('publishers.urls')),
+
+    path('api/v1/', include('reviews.urls')),
 ]
