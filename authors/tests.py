@@ -29,3 +29,22 @@ class AuthorTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Author.objects.count(), 1)
         self.assertEqual(Author.objects.get().name, 'Autor')
+    
+
+    def test_partial_update_author(self):
+        self.author = Author.objects.create(name='Autor', nationality='BRA')
+        url = reverse('author-detail-view', kwargs={'pk': self.author.id})
+        data = {"name": "NomeAuthor"}
+        response = self.client.patch(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(Author.objects.get().name, 'NomeAuthor')
+    
+    def test_delete_author(self):
+        self.author = Author.objects.create(name='Autor', nationality='BRA')
+        url = reverse('author-detail-view', kwargs={'pk': self.author.id})
+        data = {"name": "NomeAuthor"}
+        self.assertEqual(Author.objects.count(), 1)
+        response = self.client.delete(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(Author.objects.count(), 0)
+        
