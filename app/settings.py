@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'books',
     'publishers',
     'reviews',
+    'wishreadlist',
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'
