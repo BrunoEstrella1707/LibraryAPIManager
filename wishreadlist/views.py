@@ -21,7 +21,7 @@ class WishReadListViewSet(viewsets.GenericViewSet):
     
 
     @action(detail=False, methods=["post"])
-    def wishlist(self, request):
+    def add_to_wishlist(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
@@ -39,7 +39,7 @@ class WishReadListViewSet(viewsets.GenericViewSet):
     
 
     @action(detail=False, methods=["post"])
-    def readlist(self, request):
+    def add_to_readlist(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
@@ -56,3 +56,4 @@ class WishReadListViewSet(viewsets.GenericViewSet):
             {"detail": "Book marked as read."},
             status=status.HTTP_201_CREATED
         )
+    
