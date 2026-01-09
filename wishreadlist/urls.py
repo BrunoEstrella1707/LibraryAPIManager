@@ -11,5 +11,5 @@ urlpatterns = [
     path('', include(router.urls)),
 ]
 
-# http://localhost:8000/api/v1/userbooks/wishlist/
-# http://localhost:8000/api/v1/userbooks/readlist/
+# http://localhost:8000/api/v1/userbooks/add_to_wishlist/
+# http://localhost:8000/api/v1/userbooks/add_to_readlist/
