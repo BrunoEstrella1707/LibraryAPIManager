@@ -8,7 +8,8 @@ from books.models import Book
 class WishListSerializer(serializers.ModelSerializer):
     class Meta:
         model = WishReadList
-        fields = ['book']
+        fields = ['book', 'date']
+        read_only_fields = ['date']
     
 
     def validate(self, attrs):
