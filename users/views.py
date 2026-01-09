@@ -2,9 +2,12 @@ from django.shortcuts import render, get_object_or_404
 from rest_framework.response import Response
 from django.db.utils import IntegrityError
 from rest_framework import status, viewsets, serializers
+from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from users.models import CustomUser
 from users.serializers import UserCreateSerializer, UserUpdateListDetailSerializer
+from wishreadlist.models import WishReadList
+from wishreadlist.serializers import WishListSerializer, ReadListSerializer
 
 
 class UserCRUDView(viewsets.ModelViewSet):
@@ -44,6 +47,7 @@ class UserCRUDView(viewsets.ModelViewSet):
         except IntegrityError:
             raise serializers.ValidationError({"detail": "Error creating the user. Check the fields!"})
     
+    
     def retrieve(self, request, pk=None, *args, **kwargs):
         
         queryset = CustomUser.objects.all()
@@ -56,5 +60,22 @@ class UserCRUDView(viewsets.ModelViewSet):
         )
         
         
+    @action(detail=False, methods=['get'], url_path=('me/wishlist'))
+    def my_wishlist(self, request):
+        qs = WishReadList.objects.filter(
+            user=request.user,
+            list_type='WISH'
+        )
+        serializer = WishListSerializer(qs, many=True)
+        return Response(serializer.data)
+    
 
+    @action(detail=False, methods=['get'], url_path=('me/readlist'))
+    def my_readlist(self, request):
+        qs = WishReadList.objects.filter(
+            user=request.user,
+            list_type='READ'
+        )
+        serializer = ReadListSerializer(qs, many=True)
+        return Response(serializer.data)
 
