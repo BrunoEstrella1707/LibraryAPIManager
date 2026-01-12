@@ -1,0 +1,9 @@
+services:
+  lib_service:
+    build: .
+    restart: always
+    ports:
+      - 8000:8000
+
+
+  
