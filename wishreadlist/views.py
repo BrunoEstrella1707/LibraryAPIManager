@@ -13,9 +13,9 @@ class WishReadListViewSet(viewsets.GenericViewSet):
     permission_classes = (IsAuthenticated, )
 
     def get_serializer_class(self):
-        if self.action == 'wishlist':
+        if self.action == 'add_to_wishlist':
             return WishListSerializer
-        elif self.action == 'readlist':
+        elif self.action == 'add_to_readlist':
             return ReadListSerializer
         return None
     
