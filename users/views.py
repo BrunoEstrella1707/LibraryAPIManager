@@ -78,4 +78,24 @@ class UserCRUDView(viewsets.ModelViewSet):
         )
         serializer = ReadListSerializer(qs, many=True)
         return Response(serializer.data)
+    
+
+    @action(detail=True, methods=['get'], url_path=('wishlist'))
+    def user_wishlist(self, request, pk=None):
+        qs = WishReadList.objects.filter(
+            user=pk,
+            list_type='WISH'
+        )
+        serializer = WishListSerializer(qs, many=True)
+        return Response(serializer.data)
+    
+
+    @action(detail=True, methods=['get'], url_path=('readlist'))
+    def user_readlist(self, request, pk=None):
+        qs = WishReadList.objects.filter(
+            user=pk,
+            list_type='READ'
+        )
+        serializer = ReadListSerializer(qs, many=True)
+        return Response(serializer.data)
 
