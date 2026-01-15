@@ -4,6 +4,25 @@ services:
     restart: always
     ports:
       - 8000:8000
+    depends_on:
+      - library_db
 
+  library_db:
+    image: postgres:16
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DATABASE_NAME}
+  
+  web:
+    env_file:
+      - .env
+
+volumes:
+  postgres_data:
 
   
