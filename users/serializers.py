@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.password_validation import validate_password
+from django.db.models import Count
 from users.models import CustomUser
 
 
@@ -10,13 +11,19 @@ class UserUpdateListDetailSerializer(serializers.ModelSerializer):
         input_formats=["%d/%m/%Y", "%d-%m-%Y"]
     )
 
+    read_books = serializers.SerializerMethodField(read_only=True)
+
     class Meta():
         model = CustomUser
         fields = ['id', 'email', 'username', 
                   'name', 'date_joined', 'description',
-                  'birth_date', ]
+                  'birth_date', 'read_books']
         
-        read_only_fields = ['id', 'date_joined']
+        read_only_fields = ['id', 'date_joined', 'read_books', ]
+    
+    
+    def get_read_books(self, object):
+        return object.user_list.filter(list_type='READ').count()
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
