@@ -19,6 +19,9 @@ class ReviewListCreateView(generics.ListCreateAPIView):
             return ReviewListDetailSerializer
         else:
             return ReviewSerializer
+    
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
            
 
 class ReviewRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
