@@ -1,9 +1,11 @@
 # **LibraryManager**
-## **WORK IN PROGRESS**
 
-A simple RESTful API for managing books, authors, publisher and reviewing it.
-Developed in Django Rest Framework using a Postgres database.
-More feats coming soon.
+A simple RESTful API for managing books, authors, publisher and reviewing it. Authentication with JWT.
+Developed in Django Rest Framework using a Postgres database. All services running with Docker.
+
+- Manage books, publishers and authors.
+- Add books to read or wish lists.
+- Review books and watch other books reviews and stats.
 
 ### Run it with docker:
 ```bash
