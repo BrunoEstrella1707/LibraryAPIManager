@@ -1,14 +1,27 @@
 from rest_framework import generics, views, response, status
+from rest_framework.pagination import PageNumberPagination
 from django.db.models import Avg, Count
+from django_filters.rest_framework import DjangoFilterBackend
+from books.filters import BookFilterSet
 from books.serializers import BookSerializer, BookListDetailSerializer, BookReviewListSerializer, BookStatsSerializer
 from books.models import Book
 from reviews.models import Review
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 
+class BookPagination(PageNumberPagination):
+    page_size = 5
+    page_size_query_param = 'page_size'
+    max_page_size = 100
+
+
 class BookCreateListView(generics.ListCreateAPIView):
 
-    queryset = Book.objects.all()
+    queryset = Book.objects.all().order_by('-id')
+    pagination_class = BookPagination
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = BookFilterSet
+
 
     def get_serializer_class(self):
         if self.request.method == 'GET':
